@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +27,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.karan.firechat.ui.common.EmailOutlineField
 import com.karan.firechat.ui.common.PasswordOutlineField
+import com.karan.firechat.ui.navigation.AuthScreen
+import com.karan.firechat.ui.navigation.BottomNavScreen
+import com.karan.firechat.ui.navigation.Screen
 import com.karan.firechat.ui.navigation.SignUpScreen
+import com.karan.firechat.utils.PreferenceHelper
+import com.karan.firechat.utils.PrefsKeys
+import com.karan.firechat.utils.getPrefs
 import com.karan.firechat.utils.showToast
 
 @Composable
@@ -35,23 +42,13 @@ fun AuthView(
     navHostController: NavHostController,
     authViewModel: AuthViewModel = hiltViewModel()
 ) {
-    val viewState by authViewModel.state.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
 
-    var textEmail: String by remember { mutableStateOf("") }
-    var textPassword: String by remember { mutableStateOf("") }
+    var textEmail: String by rememberSaveable { mutableStateOf("") }
+    var textPassword: String by rememberSaveable { mutableStateOf("") }
     Log.e("TAG", "AuthView: outer", )
 
-    with(viewState){
-        Log.e("TAG", "AuthVidfgdew: ", )
-        when(this){
-            is AuthScreenState.Error -> context.showToast(this.message)
-            is AuthScreenState.Success<*> -> context.showToast(this.data.toString())
-            AuthScreenState.Initial -> context.showToast("Initial")
-            AuthScreenState.Loading -> context.showToast("loading")
-        }
-    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -67,7 +64,32 @@ fun AuthView(
             textPassword = it
         }
         Spacer(modifier = Modifier.height(25.dp))
-        Button(onClick = {authViewModel.signIn(email = textEmail, pass = textPassword)}) {
+        Button(
+            onClick = {
+                authViewModel.signIn(
+                    email = textEmail,
+                    pass = textPassword,
+                    onSuccess = {status ->
+                        if(status){
+//                            context.getPrefs().edit().apply{
+//                                putBoolean(PrefsKeys.KEY_IS_LOGGED_IN , true)
+//                                commit()
+//                            }
+
+                            navHostController.navigate(BottomNavScreen.route){
+                                navHostController.popBackStack(
+                                    route = AuthScreen.route,
+                                    inclusive = true
+                                )
+                            }
+                        }
+                    },
+                    onFailure = {message ->
+                        context.showToast(message)
+                    }
+                )
+            }
+        ){
             Text(text = "Login")
         }
         Spacer(modifier = Modifier.height(25.dp))
@@ -83,12 +105,3 @@ fun AuthView(
 
     }
 }
-
-
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-private fun AuthPrev() {
-//    AuthView()
-}
-
-

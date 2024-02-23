@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
 fun EmailOutlineField(
+    modifier: Modifier =  Modifier.fillMaxWidth(),
     value : ()-> String,
     hint: String,
     icon: ImageVector,
@@ -18,7 +19,7 @@ fun EmailOutlineField(
 
 
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         value = value(),
         label = { Text(text = hint) },
         onValueChange = onChange,

@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
 fun PasswordOutlineField(
+    modifier: Modifier = Modifier.fillMaxWidth(),
     value: () -> String,
     hint: String,
     icon: ImageVector,
@@ -28,7 +29,7 @@ fun PasswordOutlineField(
     var passwordVisibility by remember { mutableStateOf(false) }
 
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         value = value(),
         label = { Text(hint) },
         onValueChange = onChange,

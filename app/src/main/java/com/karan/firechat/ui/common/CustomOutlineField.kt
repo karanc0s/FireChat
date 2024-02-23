@@ -8,13 +8,13 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun CustomOutlineField(
-
+    modifier: Modifier = Modifier,
     value : ()-> String,
     hint: String,
     onChange: (String) -> Unit = {}
 ) {
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         value = value(),
         label = { Text(text = hint) },
         onValueChange = onChange,

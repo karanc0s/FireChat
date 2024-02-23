@@ -8,12 +8,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.karan.firechat.ui.navigation.AuthScreen
+import com.karan.firechat.ui.navigation.BottomNavScreen
 import com.karan.firechat.ui.navigation.Screen
 import com.karan.firechat.ui.navigation.SplashScreen
+import com.karan.firechat.utils.PrefsKeys
+import com.karan.firechat.utils.getPrefs
 import kotlinx.coroutines.delay
 
 @Composable
@@ -22,13 +24,23 @@ fun SplashView(
     navHostController: NavHostController
 ) {
 
+    val context = LocalContext.current
+
     LaunchedEffect(key1 = true) {
         delay(timeMillis = 3000)
 
         // with shared preferences
         // if user logged in move to home
         // else move to auth screen
-        navHostController.navigate(route = AuthScreen.route){
+
+        val route: String = if(context.getPrefs().getBoolean(PrefsKeys.KEY_IS_LOGGED_IN , false)){
+            BottomNavScreen.route
+        }else{
+            AuthScreen.route
+        }
+
+
+        navHostController.navigate(route = route){
             navHostController.popBackStack(route = SplashScreen.route , inclusive = true)
         }
 
@@ -39,12 +51,6 @@ fun SplashView(
     }
 }
 
-
-@Preview(showBackground = true , showSystemUi = true)
-@Composable
-private fun SplashPrev() {
-    SplashView(navHostController = rememberNavController())
-}
 
 
 

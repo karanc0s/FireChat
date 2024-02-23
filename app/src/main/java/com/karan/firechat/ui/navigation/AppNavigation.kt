@@ -7,7 +7,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.karan.firechat.ui.screen.auth.AuthView
 import com.karan.firechat.ui.screen.auth.SignUpView
+import com.karan.firechat.ui.screen.bottomNav.BottomNavigationView
 import com.karan.firechat.ui.screen.splash.SplashView
+import com.karan.firechat.ui.screen.tabChats.TabChatsView
+import com.karan.firechat.ui.screen.tabExplore.TabExploreView
+import com.karan.firechat.ui.screen.tabProfile.TabProfileView
 
 @Composable
 fun AppNavigation( navHostController: NavHostController) {
@@ -26,8 +30,19 @@ fun AppNavigation( navHostController: NavHostController) {
             SignUpView(navHostController = navHostController)
         }
 
-        composable(route = HomeScreen.route){
 
+        composable(route = BottomNavScreen.route){
+            BottomNavigationView(navHostController = navHostController)
+        }
+
+        composable(route = TabChats.route){
+            TabChatsView(navHostController = navHostController)
+        }
+        composable(route = TabExplore.route){
+            TabExploreView(navHostController = navHostController)
+        }
+        composable(route = TabProfile.route){
+            TabProfileView(navHostController = navHostController)
         }
 
     }

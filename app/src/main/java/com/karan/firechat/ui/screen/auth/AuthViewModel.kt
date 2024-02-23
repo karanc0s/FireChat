@@ -17,65 +17,53 @@ class AuthViewModel @Inject constructor(
     private val authUseCases: AuthUseCases,
 ) : ViewModel() {
 
-    private val _screenState = MutableStateFlow<AuthScreenState>(AuthScreenState.Initial)
-    val state = _screenState.asStateFlow()
-
-    // d
 
     init {
         Log.e("TAG", "signIn: ", )
     }
 
-    var emailText = mutableStateOf("")
-    var passText = mutableStateOf("")
 
-    fun signIn(email : String , pass : String){
+    fun signIn(email : String , pass : String , onSuccess : (Boolean)->Unit , onFailure : (String)->Unit){
         Log.e("TAG", "signIn: ", )
         viewModelScope.launch {
             authUseCases.signIn.signIn(email, pass).collect{result ->
                 when(result){
-                    Result.Loading -> {
-                        _screenState.value = AuthScreenState.Loading
-                    }
+                    Result.Loading -> {}
                     is Result.Error -> {
-                        _screenState.value = AuthScreenState.Error(result.error)
+                        onFailure(result.error)
                     }
                     is Result.Success -> {
-                        _screenState.value = AuthScreenState.Success(data = true)
+                        onSuccess(result.data)
                     }
                 }
             }
         }
     }
-    fun signUp(email : String , pass : String){
+    fun signUp(email : String , pass : String,onSuccess : (Boolean)->Unit , onFailure : (String)->Unit){
         viewModelScope.launch {
             authUseCases.signUp.signUp(email, pass).collect{result ->
                 when(result){
-                    Result.Loading -> {
-                        _screenState.value = AuthScreenState.Loading
-                    }
+                    Result.Loading -> {}
                     is Result.Error -> {
-                        _screenState.value = AuthScreenState.Error(result.error)
+                        onFailure(result.error)
                     }
                     is Result.Success -> {
-                        _screenState.value = AuthScreenState.Success(data = true)
+                        onSuccess(result.data)
                     }
                 }
             }
         }
     }
-    fun isUserAuthenticated(email : String , pass : String){
+    fun isUserAuthenticated(email : String , pass : String,onSuccess : (Boolean)->Unit , onFailure : (String)->Unit){
         viewModelScope.launch {
             authUseCases.isUserAuthenticated.isUserAuthenticated(email, pass).collect{result ->
                 when(result){
-                    Result.Loading -> {
-                        _screenState.value = AuthScreenState.Loading
-                    }
+                    Result.Loading -> {}
                     is Result.Error -> {
-                        _screenState.value = AuthScreenState.Error(result.error)
+                        onFailure(result.error)
                     }
                     is Result.Success -> {
-                        _screenState.value = AuthScreenState.Success(data = true)
+                        onSuccess(result.data)
                     }
                 }
             }
