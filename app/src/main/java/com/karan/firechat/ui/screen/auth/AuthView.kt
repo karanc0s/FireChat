@@ -14,24 +14,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.karan.firechat.ui.common.EmailOutlineField
 import com.karan.firechat.ui.common.PasswordOutlineField
 import com.karan.firechat.ui.navigation.AuthScreen
 import com.karan.firechat.ui.navigation.BottomNavScreen
-import com.karan.firechat.ui.navigation.Screen
 import com.karan.firechat.ui.navigation.SignUpScreen
-import com.karan.firechat.utils.PreferenceHelper
 import com.karan.firechat.utils.PrefsKeys
 import com.karan.firechat.utils.getPrefs
 import com.karan.firechat.utils.showToast
@@ -71,10 +66,10 @@ fun AuthView(
                     pass = textPassword,
                     onSuccess = {status ->
                         if(status){
-//                            context.getPrefs().edit().apply{
-//                                putBoolean(PrefsKeys.KEY_IS_LOGGED_IN , true)
-//                                commit()
-//                            }
+                            context.getPrefs().edit().apply{
+                                putBoolean(PrefsKeys.KEY_IS_LOGGED_IN , true)
+                                commit()
+                            }
 
                             navHostController.navigate(BottomNavScreen.route){
                                 navHostController.popBackStack(
