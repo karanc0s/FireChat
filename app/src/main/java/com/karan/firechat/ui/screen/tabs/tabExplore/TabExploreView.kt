@@ -1,4 +1,4 @@
-package com.karan.firechat.ui.screen.tabProfile
+package com.karan.firechat.ui.screen.tabs.tabExplore
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,9 +9,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 
 @Composable
-fun TabProfileView(navHostController: NavHostController) {
-
-
-    Box(modifier = Modifier.fillMaxSize().background(Color.Blue)){}
-
+fun TabExploreView(navHostController: NavHostController) {
+    Box(modifier = Modifier.fillMaxSize().background(Color.Red)){}
 }

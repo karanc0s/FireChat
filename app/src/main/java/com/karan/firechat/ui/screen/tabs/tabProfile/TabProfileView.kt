@@ -1,6 +1,5 @@
-package com.karan.firechat.ui.screen.tabChats
+package com.karan.firechat.ui.screen.tabs.tabProfile
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,8 +9,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 
 @Composable
-fun TabChatsView(navHostController: NavHostController) {
-    Log.e("TAG", "TabChatsView: ", )
-    Box(modifier = Modifier.fillMaxSize().background(Color.Green)){}
+fun TabProfileView(navHostController: NavHostController) {
+
+
+    Box(modifier = Modifier.fillMaxSize().background(Color.Blue)){}
 
 }

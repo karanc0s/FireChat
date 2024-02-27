@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.karan.firechat.ui.screen.tabChats.TabChatsView
-import com.karan.firechat.ui.screen.tabExplore.TabExploreView
-import com.karan.firechat.ui.screen.tabProfile.TabProfileView
+import com.karan.firechat.ui.screen.tabs.tabChats.TabChatsView
+import com.karan.firechat.ui.screen.tabs.tabExplore.TabExploreView
+import com.karan.firechat.ui.screen.tabs.tabProfile.TabProfileView
 
 
 @Composable
